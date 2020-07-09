@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_064223) do
+ActiveRecord::Schema.define(version: 2020_07_09_080022) do
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "image", null: false
-    t.integer "price", null: false
-    t.string "purchase_date", null: false
+    t.string "name", null: false, comment: "書籍名"
+    t.string "image", null: false, comment: "書籍画像"
+    t.integer "price", null: false, comment: "書籍価格"
+    t.string "purchase_date", null: false, comment: "書籍価格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
