@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # POST /users
-  def sign_up
+  def signup
     @user = User.new(user_params)
 
     if @user.save
@@ -20,6 +20,17 @@ class Api::V1::UsersController < ApplicationController
       return
     end
   end
+
+  def logout
+    if @users = User.where(email: user_params[:email])
+      render json: {status: '200'}
+      return
+    else
+      render json: @user.errors, status: '400'
+      return
+    end
+  end
+
 
   # PATCH/PUT /users/1
   def update
