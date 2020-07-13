@@ -48,16 +48,16 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new User" do
+  describe "POST /signup" do
+    context "パラメータに問題がない場合" do
+      it "ユーザーの新規登録ができること" do
         expect {
           post users_url,
                params: { user: valid_attributes }, headers: valid_headers, as: :json
         }.to change(User, :count).by(1)
       end
 
-      it "renders a JSON response with the new user" do
+      it "ステータス200が返ること、またレスポンスがJSON形式で返ること" do
         post users_url,
              params: { user: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
@@ -65,63 +65,20 @@ RSpec.describe "/users", type: :request do
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new User" do
+    context "パラメータに問題がある場合" do
+      it "ユーザーの新規登録ができないこと" do
         expect {
           post users_url,
                params: { user: invalid_attributes }, as: :json
         }.to change(User, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new user" do
+      it "ステータス400を返し、レスポンスがJSON形式で返ること" do
         post users_url,
              params: { user: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: invalid_attributes }, headers: valid_headers, as: :json
-        user.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
-      expect {
-        delete user_url(user), headers: valid_headers, as: :json
-      }.to change(User, :count).by(-1)
     end
   end
 end
