@@ -3,10 +3,12 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users
   def login
-    if users = User.find_by(email: user_params[:email])
+    binding.pry
+    user = User.find_by(email: current_user.email)
+    unless user == nil
       render json: {status: '200', token: user.token}
     else 
-      render json: user.errors, status: '400'
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 
@@ -17,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       render json: {status: '200', token: user.token}
     else
-      render json: user.errors, status: '400'
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 
@@ -25,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
     if users = User.find(current_user.id)
       render json: {status: '200'}
     else
-      render json: user.errors, status: '400'
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 

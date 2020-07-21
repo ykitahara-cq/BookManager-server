@@ -4,10 +4,10 @@ class Api::V1::BooksController < ApplicationController
 
   # GET /books
   def index
-    if books = Book.where(user_id: current_user.id)
+    if books = fetch_list
       render json: {status: '200', result: books}
     else
-      render json: book.errors, status: :unprocessable_entity
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 
@@ -38,5 +38,24 @@ class Api::V1::BooksController < ApplicationController
 
     def book_params
       params.permit(:name, :image, :price, :purchase_date).merge(user_id: current_user.id)
+    end
+
+    def setup_limit 
+      request.query_parameters[:limit].to_i
+    end
+
+    def fetch_list
+      page = request.query_parameters[:page].to_i
+      books = Book.where(user_id: current_user.id)
+      limit = setup_limit
+      unless page == 1
+        books = books.map.with_index {|book, index|
+          if index > limit && index < index + limit
+            books = book
+          end
+        }.compact
+      else
+        books = Book.where(user_id: current_user.id).limit(setup_limit)
+      end
     end
 end
