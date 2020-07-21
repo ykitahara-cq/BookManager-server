@@ -3,52 +3,35 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users
   def login
-    @users = User.where(email: user_params[:email])
-    render json: {status: '200', token: @user.token}
+    users = User.find_by(email: user_params[:email])
+    render json: {status: '200', token: user.token}
     return
   end
 
   # POST /users
   def signup
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
-      render json: {status: '200', token: @user.token}
+    if user.save
+      render json: {status: '200', token: user.token}
       return
     else
-      render json: @user.errors, status: '400'
+      render json: user.errors, status: '400'
       return
     end
   end
 
   def logout
-    if @users = User.where(email: user_params[:email])
+    if users = User.find(current_user.id)
       render json: {status: '200'}
       return
     else
-      render json: @user.errors, status: '400'
-      return
-    end
-  end
-
-
-  # PATCH/PUT /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
-      return
-    else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: '400'
       return
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def user_params
       params.permit(:email, :password, :token)

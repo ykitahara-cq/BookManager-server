@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login', to: 'users#login'
       post '/sign_up', to: 'users#signup'
-      resources :books, only: %i(index show create update)
+      delete '/logout', to: 'users#logout'
+      resources :books, only: %i(index create update)
     end
   end
 end
