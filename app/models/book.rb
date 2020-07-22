@@ -5,4 +5,9 @@ class Book < ApplicationRecord
   validates :price, null: false, presence: true
   validates :purchase_date, null: false, presence: true
   validates :image, null: false, presence: true
+
+  def convert_image
+    
+  end
+
 end
