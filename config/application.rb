@@ -37,7 +37,7 @@ module BookManagerApi
     # デフォルトのlocaleを日本（:ja）にする
     config.api_only = true
     config.i18n.default_locale = :ja
-
+    # 辞書ファイルを読み込む設定
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
   end
 end
