@@ -14,11 +14,11 @@ class Api::V1::BooksController < ApplicationController
   # POST /books
   def create
     book = Book.new(book_params)
-
+    
     if book.save!
       render json: {status: '200', result: book}
     else
-      render json: @book.errors, status: :unprocessable_entity
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 
@@ -27,7 +27,7 @@ class Api::V1::BooksController < ApplicationController
     if book = set_book.update!(book_params)
       render json: {status: '200', result: set_book}
     else
-      render json: @book.errors, status: :unprocessable_entity
+      render json: {status: '400', message: "パラメーターが不正です"} 
     end
   end
 
