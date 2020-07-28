@@ -1,9 +1,8 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :current_user, only: :login
 
-  # GET /users
+  # POST /users
   def login
-    binding.pry
     user = User.find_by(email: current_user.email)
     unless user == nil
       render json: {status: '200', token: user.token}
