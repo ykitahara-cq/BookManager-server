@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :current_user, only: :login
+  before_action :current_user, only: [:login, :logout]
 
   # POST /users
   def login

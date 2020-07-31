@@ -1,6 +1,6 @@
 class Api::V1::BooksController < ApplicationController
   before_action :set_book, only: [:update ]
-  before_action :book_params, only: [:create, :update]
+  before_action :book_params, only: [:index, :update]
 
   # GET /books
   def index
@@ -15,7 +15,7 @@ class Api::V1::BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     
-    if book.save!
+    if book.save
       render json: {status: '200', result: book}
     else
       render json: {status: '400', message: "パラメーターが不正です"} 
