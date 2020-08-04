@@ -2,7 +2,6 @@ require 'httpclient'
 
 class ImgurUploader
   def self.upload_image(base64)
-    binding.pry
     http_client = HTTPClient.new
     response = http_client.post(URI.parse(ENV['URL']),
                                 { image: base64 },
