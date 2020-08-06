@@ -16,9 +16,9 @@ RSpec.describe "/books", type: :request do
 
     context "パラメーターに問題がある場合" do
       it "書籍の一覧が取得できないこと" do
-        # user = User.find_by(id: book.user_id)
-        # get api_v1_books_path, params: {limit: 20, page: 1}, headers: { Authorization: nil }
-        # expect(response).to_not be_successful
+        user = User.find_by(id: book.user_id)
+        get api_v1_books_path, params: {limit: 20, page: 1}, headers: { Authorization: nil }
+        expect(JSON.parse(response.body)["status"]).to_not eq(200)
       end
     end
   end
@@ -48,15 +48,16 @@ RSpec.describe "/books", type: :request do
         put api_v1_book_path(book),
           params: { name: book.name + "edit", price: book.price, image: book.image, purchase_date: book.purchase_date }, headers: { Authorization: user.token }
           expect(JSON.parse(response.body)["status"]).to eq(200)
+        end
       end
-    end
-
-    context "パラメータに問題がある場合" do
-      it "書籍編集ができないこと" do
-        put api_v1_book_path(book),
+      
+      context "パラメータに問題がある場合" do
+        it "書籍編集ができないこと" do
+          put api_v1_book_path(book),
           params: { name: nil, price: book.price, image: book.image, purchase_date: book.purchase_date }, headers: { Authorization: user.token }
           expect(JSON.parse(response.body)["status"]).to_not eq(200)
+        end
       end
     end
   end
-end
+  

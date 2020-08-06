@@ -1,7 +1,7 @@
 require 'httpclient'
 
 class Book < ApplicationRecord
-  # before_save :convert_image
+  before_save :convert_image
   belongs_to :user
 
   validates :name, null: false, presence: true

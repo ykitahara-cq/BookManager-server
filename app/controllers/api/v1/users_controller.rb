@@ -16,17 +16,17 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render json: {status: '200', token: user.token}
+      render json: {status: 200, token: user.token}
     else
-      render json: {status: '400', message: "パラメーターが不正です"} 
+      render json: {status: 400, message: "パラメーターが不正です"} 
     end
   end
 
   def logout
     if users = User.find(current_user.id)
-      render json: {status: '200'}
+      render json: {status: 200}
     else
-      render json: {status: '400', message: "パラメーターが不正です"} 
+      render json: {status: 400, message: "パラメーターが不正です"} 
     end
   end
 

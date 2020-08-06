@@ -26,9 +26,9 @@ class Api::V1::BooksController < ApplicationController
   def update
     if book = set_book.update(book_params)
       
-      render json: {status: '200', result: set_book}
+      render json: {status: 200, result: set_book}
     else
-      render json: {status: '400', message: "パラメーターが不正です"} 
+      render json: {status: 400, message: "パラメーターが不正です"} 
     end
   end
 
