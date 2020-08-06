@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  # rescue_from ActiveRecord::NoMethodError, with: :rescue404
   rescue_from NameError, with: :rescue404
 
   def current_user
