@@ -34,6 +34,7 @@ RSpec.describe "/users", type: :request do
     context "パラメータに問題がある場合" do
       let(:params) {{email: login_params.email, password: invalid_user.password }}
       it "ログインができないこと" do
+        post api_v1_login_path, params: params, headers: {Authorization: login_params.token}
         expect(JSON.parse(response.body)["status"]).to_not eq(200)
       end
     end
