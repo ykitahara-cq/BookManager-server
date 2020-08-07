@@ -1,4 +1,4 @@
-20.times do |n|
+20.times do |_n|
   @user = User.create!(
     email: Faker::Internet.email,
     password: 'password',
