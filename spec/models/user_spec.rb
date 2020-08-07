@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
   let(:invalid_user) {build(:user, :invalid_user)}
   describe 'validatation' do 
     context '存在チェック' do
