@@ -4,7 +4,10 @@ class Api::V1::BooksController < ApplicationController
 
   # GET /books
   def index
-    if books = current_user.books.page(params[:page]).per(params[:limit])
+    if books = current_user.books.select(:id, :name, :image, :price, :purchase_date).page(params[:page]).per(params[:limit])
+      
+      binding.pry
+      
       render json: { status: 200, result: books }
     else
       render json: { status: 400, message: 'パラメーターが不正です' }
@@ -14,9 +17,9 @@ class Api::V1::BooksController < ApplicationController
   # POST /books
   def create
     book = Book.new(book_params)
-
+    binding.pry
     if book.save
-      render json: { status: 200, result: book }
+      render json: { status: 200, result: {id: book.id, name: book.name, image: book.image, price: book.price, purchase_date: book.purchase_date} }
     else
       render json: { status: 400, message: 'パラメーターが不正です' }
     end
@@ -26,7 +29,7 @@ class Api::V1::BooksController < ApplicationController
   def update
     if set_book.update(book_params)
 
-      render json: { status: 200, result: set_book }
+      render json: { status: 200, result: {id: set_book.id, name: set_book.name, image: set_book.image, price: set_book.price, purchase_date: set_book.purchase_date} }
     else
       render json: { status: 400, message: 'パラメーターが不正です' }
     end
