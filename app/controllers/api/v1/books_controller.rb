@@ -5,9 +5,6 @@ class Api::V1::BooksController < ApplicationController
   # GET /books
   def index
     if books = current_user.books.select(:id, :name, :image, :price, :purchase_date).page(params[:page]).per(params[:limit])
-      
-      binding.pry
-      
       render json: { status: 200, result: books }
     else
       render json: { status: 400, message: 'パラメーターが不正です' }
@@ -17,7 +14,6 @@ class Api::V1::BooksController < ApplicationController
   # POST /books
   def create
     book = Book.new(book_params)
-    binding.pry
     if book.save
       render json: { status: 200, result: {id: book.id, name: book.name, image: book.image, price: book.price, purchase_date: book.purchase_date} }
     else
