@@ -14,7 +14,6 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def signup
     user = User.new(user_params)
-
     if user.save
       render json: { status: 200, jwt: user.token }
     else
