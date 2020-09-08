@@ -8,7 +8,6 @@ class ApplicationController < ActionController::API
   private
 
   def rescue404(e)
-    @exception = e
-    render json: { status: 404, message: @exception }
+    render json: { status: 404, message: e }
   end
 end
