@@ -1,5 +1,5 @@
 class Api::V1::BooksController < ApplicationController
-  before_action :set_book, only: [:update]
+  before_action :set_book, only: :update
   before_action :book_params, only: %i[index update]
 
   # GET /books
