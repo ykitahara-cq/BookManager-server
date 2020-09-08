@@ -24,7 +24,6 @@ class Api::V1::BooksController < ApplicationController
   # PATCH/PUT /books/:id
   def update
     if set_book.update(book_params)
-
       render json: { status: 200, result: {id: set_book.id, name: set_book.name, image: set_book.image, price: set_book.price, purchase_date: set_book.purchase_date} }
     else
       render json: { status: 400, message: 'パラメーターが不正です' }
@@ -32,12 +31,11 @@ class Api::V1::BooksController < ApplicationController
   end
 
   private
+    def set_book
+      Book.find(params[:id])
+    end
 
-  def set_book
-    Book.find(params[:id])
-  end
-
-  def book_params
-    params.permit(:name, :image, :price, :purchase_date).merge(user_id: current_user.id)
-  end
+    def book_params
+      params.permit(:name, :image, :price, :purchase_date).merge(user_id: current_user.id)
+    end
 end
